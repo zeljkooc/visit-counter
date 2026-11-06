@@ -11,13 +11,21 @@ services:
         REDIS_HOST: ${REDIS_HOST}
         REDIS_PORT: ${REDIS_PORT}
       depends_on:
-        - redis
+        redis:
+          condition: service_healthy
+      restart: unless-stopped
 
 
   redis:
-    image: redis:7
+    image: redis:7.4-alpine
     volumes:
       - redisData:/data
+    restart: unless-stopped
+    healthcheck:
+      test: [ "CMD", "redis-cli", "ping" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   redisData:
