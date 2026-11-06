@@ -1,0 +1,23 @@
+services:
+  app:
+      build:
+        context: .
+        dockerfile: app.dockerfile
+      image: app
+      ports:
+        - "${APP_PORT}:${APP_PORT}"
+      environment:
+        APP_PORT: ${APP_PORT}
+        REDIS_HOST: ${REDIS_HOST}
+        REDIS_PORT: ${REDIS_PORT}
+      depends_on:
+        - redis
+
+
+  redis:
+    image: redis:7
+    volumes:
+      - redisData:/data
+
+volumes:
+  redisData:
