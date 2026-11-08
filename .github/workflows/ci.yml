@@ -1,0 +1,44 @@
+name: visit-counter
+
+on:
+  pull_request:
+    branches:
+      - main
+  push:
+    branches:
+      - main
+
+jobs:
+  test-app:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+          pip install ruff
+          pip install pytest
+
+      - name: Run linter
+        run: ruff check .
+
+      - name: Create env
+        run: cp .env.example .env
+
+      - name: Docker build
+        run: docker compose build
+
+      - name: Start application
+        run: docker compose up -d
+
+      - name: Health check
+        run: scripts/healthcheck.sh http://localhost:8080
+
+      - name: Run tests
+        run: python -m pytest -v
+
+      - name: Stop application
+        if: always()
+        run: docker compose down
