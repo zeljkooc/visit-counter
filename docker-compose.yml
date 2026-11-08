@@ -2,7 +2,6 @@ services:
   app:
       build:
         context: .
-        dockerfile: app.dockerfile
       image: app
       ports:
         - "${APP_PORT}:${APP_PORT}"

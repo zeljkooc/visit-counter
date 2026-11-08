@@ -13,13 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
           pip install ruff
           pip install pytest
+          pip install request
 
       - name: Run linter
         run: ruff check .

@@ -1,7 +1,9 @@
 import os
-from flask import Flask, jsonify, request
-import redis
 import socket
+
+import redis
+from flask import Flask, jsonify
+from redis import RedisError
 
 application = Flask(__name__)
 
@@ -17,9 +19,10 @@ def index():
 
 @application.route("/health", methods=["GET"])
 def health():
-    if redis_client is not None:
+    try:
+        redis_client.ping()
         return jsonify({"status": "ok"}), 200
-    else:
+    except RedisError:
         return jsonify({"status": "error"}), 503
 
 @application.route("/visits", methods=["GET"])
