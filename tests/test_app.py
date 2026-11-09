@@ -2,7 +2,7 @@ import os
 
 import requests
 
-PORT = os.getenv("PORT", "8080")
+PORT = os.getenv("APP_PORT", "8080")
 
 #Test koji proverava stanje visits pre i posle inkrementiranja i poredi ih
 def testVisits():

@@ -26,6 +26,7 @@ Preduslov za pokretanje je instaliran Docker i Git za preuzimanje repozitorijuma
 ```bash
 git clone https://github.com/zeljkooc/visit-counter.git
 cd visit-counter
+cp .env.example .env
 docker compose up -d
 ```
 
@@ -47,6 +48,16 @@ Skripta poziva `/health` endpoint 5 puta i ispisuje vreme i HTTP kod.
 3. **Osnovne slike `python:3.12-slim` i `redis:7.4-alpine`:** ove verzije zauzimaju manje prostora pa su efikasnije.
 4. Redis nije izložen na nekom portu pa nije moguć pristup spolja.
 
+## Pokretanje - Kubernetes
+Preduslovi - kreirati kind kubernetes cluster i pokrenuti sledece komande: 
+```bash
+docker build -t app .
+kubectl apply -f k8s/
+```
+Aplikacija je tada dostupna na `http://localhost:8080`.
+
+Brisanje: `kubectl delete -f k8s/` i `kind delete cluster --name visit-counter`.
+
 ## Problemi na koje sam naišao
 - Tokom kreiranja **CI Pipeline-a**, postojali su problemi oko biblioteka koje nisu instalirane u skripti.
 - Kod endpointa **/visits**, problem je bio što stanje baze nije konzistentno ako se zahtevi šalju brzo ili istovremeno, to je rešeno pomoću `incr()` funkcije.
@@ -57,7 +68,6 @@ Skripta poziva `/health` endpoint 5 puta i ispisuje vreme i HTTP kod.
 - Povećao broj testova
 - Dodao sigurnosne provere u pipeline
 - Dodao skriptu za sigurnosnu proveru
-- Napravio pokretanje preko Kubernetes-a da bi aplikacija uvek bila dostupna
 - Dodao lozinku za Redis
 - Naučio ostale oblasti iz bonus zadataka i primenio u njima
 
