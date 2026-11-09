@@ -63,6 +63,7 @@ Brisanje: `kubectl delete -f k8s/` i `kind delete cluster --name visit-counter`.
 - Kod endpointa **/visits**, problem je bio što stanje baze nije konzistentno ako se zahtevi šalju brzo ili istovremeno, to je rešeno pomoću `incr()` funkcije.
 - Sintaksa kod **healthcheck.sh** skripte - nepoznat format datuma na MacOS.
 - Izvlačenje statusa i http koda iz JSON odgovora kod **healthcheck.sh** skripte.
+- Trivy je nalazio neke ranjivosti biblioteke koje nisam stigao da pronadjem.
 
 ## Šta bih unapredio uz više vremena
 - Povećao broj testova
