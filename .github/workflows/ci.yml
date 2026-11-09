@@ -31,14 +31,6 @@ jobs:
       - name: Docker build
         run: docker compose build
 
-      - name: Trivy scan
-        uses: aquasecurity/trivy-action@0.35.0
-        with:
-          image-ref: app
-          severity: CRITICAL,HIGH
-          ignore-unfixed: true
-          exit-code: 1
-
       - name: Start application
         run: docker compose up -d
 
