@@ -32,7 +32,7 @@ jobs:
         run: docker compose build
 
       - name: Trivy scan
-        uses: aquasecurity/trivy-action@0.36.0
+        uses: aquasecurity/trivy-action@0.35.0
         with:
           image-ref: app
           severity: CRITICAL,HIGH
